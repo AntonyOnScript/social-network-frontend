@@ -27,14 +27,13 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn
-                href="https://github.com/vuetifyjs/vuetify/releases/latest"
-                target="_blank"
-                text
+            <div
+                v-ripple
+                class="pa-3"
+                v-show="logged"
             >
-                <span class="mr-2">Latest Release</span>
-                <v-icon>mdi-open-in-new</v-icon>
-            </v-btn>
+                <router-link to="/posts" class="menu-links">Posts</router-link>
+            </div>
         </v-app-bar>
 
         <v-main>
@@ -47,9 +46,20 @@
 
 export default {
     name: 'App',
-
-    data: () => ({
-        //
-    }),
+    computed: {
+        logged() {
+            if(this.$store.state.token) {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
 };
 </script>
+
+<style scoped>
+    .menu-links {
+        color: white;
+    }
+</style>
