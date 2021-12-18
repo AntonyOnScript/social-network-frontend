@@ -41,7 +41,7 @@ router.beforeEach((to, from, next) => {
         .then(response => {
           next()
         }).catch(e => { 
-          return next({ path: "/" })
+          return next({ path: "/?error=unauthorized" })
         })
     } else if(to.meta.public) {
         next()

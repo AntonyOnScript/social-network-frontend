@@ -79,6 +79,15 @@
                     this.alertMessage = "Something is wrong... this account already exists."
                 })
             }
+        },
+        computed: {
+            unLogged() {
+                if(this.$route.query.error) {
+                    this.alertMessage = this.$route.query.error
+                    this.type = "warning"
+                    this.alert = true
+                }
+            }
         }
     }
 </script>

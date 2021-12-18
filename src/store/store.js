@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import http from '../http/http'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        user: {},
-        token: null
+        token: null,
+        user: null
     },
     mutations: {
         DEFINE_USER(state, { user, token }) {
@@ -17,6 +18,7 @@ export default new Vuex.Store({
         REMOVE_USER(state) {
             state.user = {}
             state.token = null
+            window.localStorage.clear()
         }
     },
     actions: {
@@ -45,6 +47,10 @@ export default new Vuex.Store({
             })
         }
     },
-    modules: {
-    }
+    getters: {
+        isLogged(state) {
+            return Boolean(state.token)
+        }
+    },
+    plugins: [createPersistedState()]
 })

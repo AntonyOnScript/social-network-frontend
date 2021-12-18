@@ -30,9 +30,17 @@
             <div
                 v-ripple
                 class="pa-3"
-                v-show="logged"
+                v-show="isLogged"
             >
                 <router-link to="/posts" class="menu-links">Posts</router-link>
+            </div>
+
+            <div
+                v-ripple
+                class="pa-3"
+                @click="logout()"
+            >
+                <button>Log Out</button>
             </div>
         </v-app-bar>
 
@@ -43,16 +51,24 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 
 export default {
     name: 'App',
     computed: {
-        logged() {
-            if(this.$store.state.token) {
-                return true
-            } else {
-                return false
+        ...mapGetters(["isLogged"])
+    },
+    watch: {
+        $route(to, from) {
+            if(to.query.error === "unauthorized") {
+                console.log(to)
+                this.$store.commit("REMOVE_USER")
             }
+        }
+    },
+    methods: {
+        logout() {
+            this.$store.commit("REMOVE_USER")
         }
     }
 };
