@@ -89,13 +89,11 @@
                 }
             }
         },
-        watch: {
-            $route(to, from) {
-                if(from.query.error) {
-                    this.alertMessage = this.$route.query.error
-                    this.type = "warning"
-                    this.alert = true
-                }
+        mounted() {
+            if(this.$route.query.error) {
+                this.alertMessage = this.$route.query.error
+                this.type = "warning"
+                this.alert = true
             }
         }
     }
