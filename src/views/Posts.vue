@@ -29,13 +29,20 @@
                     >Tweet it!</v-btn>
                 </div>
             </div>
-            {{ postData.postContent }}
         </form>
+        <div class="content-posts my-5">
+            <post username="antony san" postMessage="olá" likes="200" />
+        </div>
     </v-container>
 </template>
 
 <script>
+import Post from "@/components/Post.vue"
+
 export default {
+    components: {
+        "post": Post
+    },
     data() {
         return {
             postData: {
@@ -57,8 +64,14 @@ export default {
     methods: {
         sendPost() {
             this.$http.post("post", this.postData)
-            .then(response => console.log(response))
-            .catch(e => console.log(e))
+            .then(response => {
+                console.log(response)
+                this.sending = false
+            })
+            .catch(e => {
+                this.sending = false
+                console.log(e)
+            })
         }
     }
 }
