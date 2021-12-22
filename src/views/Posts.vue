@@ -30,8 +30,12 @@
                 </div>
             </div>
         </form>
-        <div class="content-posts my-5">
-            <post username="antony san" postMessage="olá" likes="200" />
+        <div class="content-posts my-5">    
+            <transition-group name="fade-posts" >
+                <div v-bind:key="post.associatedUser" v-for="post of posts">    
+                    <post class="my-4" :username="post.associatedUser" v-bind:key="post.associatedUser" :postMessage="post.postContent" likes="200" />
+                </div>
+            </transition-group> 
         </div>
     </v-container>
 </template>
@@ -58,8 +62,12 @@ export default {
                     }
                 },
 
-            ]
+            ],
+            posts: []
         }
+    },
+    mounted() {
+        this.getPosts()
     },
     methods: {
         sendPost() {
@@ -67,10 +75,17 @@ export default {
             .then(response => {
                 console.log(response)
                 this.sending = false
+                this.getPosts()
             })
             .catch(e => {
                 this.sending = false
-                console.log(e)
+                console.log(e.response.data)
+            })
+        },
+        getPosts() {
+            this.$http.get("posts")
+            .then(response => {
+                this.posts = response.data
             })
         }
     }
@@ -85,5 +100,13 @@ export default {
 
     .tweet-button {
         margin-top: -20px;
+    }
+
+    .fade-posts-enter-active, .fade-posts-leave-active {
+        transition: opacity .5s;
+    }
+    
+    .fade-posts-enter, .fade-posts-leave-to {
+        opacity: 0;
     }
 </style>
