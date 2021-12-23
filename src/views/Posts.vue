@@ -60,8 +60,7 @@ export default {
                     } else {
                         return "It must has at least ten characters."
                     }
-                },
-
+                }
             ],
             posts: []
         }
@@ -73,13 +72,17 @@ export default {
         sendPost() {
             this.$http.post("post", this.postData)
             .then(response => {
-                console.log(response)
+                console.log(response.data)
                 this.sending = false
                 this.getPosts()
             })
             .catch(e => {
                 this.sending = false
                 console.log(e.response.data)
+                if(e.response.data === "TokenExpiredError: jwt expired") {
+                    this.$store.commit("REMOVE_USER")
+                    console.log(this.$store.state)
+                }
             })
         },
         getPosts() {

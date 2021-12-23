@@ -36,6 +36,7 @@
             </div>
 
             <div
+                v-if="isLogged"
                 v-ripple
                 class="pa-3"
                 @click="logout()"
