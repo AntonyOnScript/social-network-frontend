@@ -5,7 +5,7 @@
         dark
     >
         <v-card-title>
-            <span class="text-h6 font-weight-light">{{ username }}</span>
+            <span class="text-h6 font-weight-light">{{ user.username }}</span>
         </v-card-title>
         <v-card-text class="text-h5 font-weight-bold">
           "{{ postMessage }}"
@@ -18,11 +18,12 @@
                     </v-avatar>
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title>{{ username }}</v-list-item-title>
+                  <v-list-item-title>{{ user.username }}</v-list-item-title>
                 </v-list-item-content>
                 <v-row
                   align="center"
                   justify="end"
+                  @click="toLike()"
                 >
                     <v-icon class="mr-1">
                       mdi-heart
@@ -36,14 +37,37 @@
 
 <script>
 export default {
-    props: ["username", "postMessage", "likes"],
+    props: ["user", "postMessage", "likes", "postId"],
     computed: {
         initialUsernameLetters() {
-            if(this.username.indexOf(" ") !== -1) {
-                return String(this.username.split(" ")[0][0]+" "+this.username.split(" ")[1][0]).toUpperCase()
+            if(this.user.username.indexOf(" ") !== -1) {
+                return String(this.user.username.split(" ")[0][0]+" "+this.user.username.split(" ")[1][0]).toUpperCase()
             } else {
-                return this.username[0].toUpperCase()
+                return this.user.username[0].toUpperCase()
             }
+        }
+    },
+    methods: {
+        toLike() {
+            this.$http.post("likePost", {
+                postId: this.postId,
+                userThatWannaLikeIt: this.$store.state.user
+            })
+            .then(response => {
+                this.$http.post("getPostLikes", {
+                    postId: this.postId
+                })
+                .then(response => {
+                    this.likes = response.data
+                })
+                .catch(e => console.log(e.response.message))
+            })
+            .catch(e => {
+                console.log(e.response.message)
+                if(e.response.message.indexOf("jwt") !== -1) {
+                    this.$store.commit("REMOVE_USER")
+                }
+            })
         }
     }
 }

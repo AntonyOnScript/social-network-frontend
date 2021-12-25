@@ -33,7 +33,7 @@
         <div class="content-posts my-5">    
             <transition-group name="fade-posts" >
                 <div v-bind:key="post.associatedUser" v-for="post of posts">    
-                    <post class="my-4" :username="post.associatedUser" v-bind:key="post.associatedUser" :postMessage="post.postContent" likes="200" />
+                    <post class="my-4" :user="post.associatedUser" v-bind:key="post.associatedUser" :postMessage="post.postContent" :postId="post._id" :likes="post.likes" />
                 </div>
             </transition-group> 
         </div>
@@ -89,6 +89,7 @@ export default {
             this.$http.get("posts")
             .then(response => {
                 this.posts = response.data
+                console.log(response.data)
             })
         }
     }
