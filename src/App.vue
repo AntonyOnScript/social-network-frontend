@@ -70,6 +70,7 @@ export default {
     methods: {
         logout() {
             this.$store.commit("REMOVE_USER")
+            this.$router.push({ name: "Home", query: { error: "Logged out." } })
         }
     }
 };

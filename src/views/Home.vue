@@ -63,7 +63,7 @@
                 .catch(e => { 
                     this.alert = true
                     this.type = "warning"
-                    this.alertMessage = "Wrong password or unknown account"
+                    this.alertMessage = e.response.data
                 })
             },
             regUser() {
@@ -76,7 +76,7 @@
                 .catch(e => { 
                     this.alert = true
                     this.type = "warning"
-                    this.alertMessage = "Something is wrong... this account already exists."
+                    this.alertMessage = e.response.data
                 })
             }
         },

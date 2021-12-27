@@ -81,6 +81,7 @@ export default {
                 console.log(e.response.data)
                 if(e.response.data === "TokenExpiredError: jwt expired") {
                     this.$store.commit("REMOVE_USER")
+                    this.$router.push({ name: "Home", query: { error: "Session expired." } })
                     console.log(this.$store.state)
                 }
             })

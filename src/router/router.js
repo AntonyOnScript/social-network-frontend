@@ -39,9 +39,9 @@ router.beforeEach((to, from, next) => {
     if(!to.meta.public) {
         http.post("checkJWT", { token: store.state.token })
         .then(response => {
-          next()
+            next()
         }).catch(e => { 
-          return next({ path: "/?error=unauthorized" })
+            return next({ path: "/?error=unauthorized" })
         })
     } else if(to.meta.public) {
         next()
