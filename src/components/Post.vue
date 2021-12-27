@@ -51,16 +51,18 @@ export default {
         toLike() {
             this.$http.post("likePost", {
                 postId: this.postId,
-                userThatWannaLikeIt: this.$store.state.user
+                userThatWannaLikeIt: this.$store.state.user._id
             })
             .then(response => {
+                console.log(response.data)
                 this.$http.post("getPostLikes", {
                     postId: this.postId
                 })
                 .then(response => {
+                    console.log(response.data)
                     this.likes = response.data
                 })
-                .catch(e => console.log(e.response.message))
+                .catch(e => console.log(e.response.data))
             })
             .catch(e => {
                 console.log(e.response.message)
