@@ -32,7 +32,7 @@
         </form>
         <div class="content-posts my-5">    
             <transition-group name="fade-posts" >
-                <div v-bind:key="post.associatedUser" v-for="post of posts">    
+                <div v-for="post of posts" v-bind:key="post.associatedUser.username">
                     <post class="my-4" :user="post.associatedUser" v-bind:key="post.associatedUser" :postMessage="post.postContent" :postId="post._id" :likes="post.likes" />
                 </div>
             </transition-group> 
