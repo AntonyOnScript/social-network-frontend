@@ -24,11 +24,12 @@
                   align="center"
                   justify="end"
                   @click="toLike()"
+                  class="like-button"
                 >
-                    <v-icon class="mr-1">
+                    <v-icon class="mr-1" ref="like">
                       mdi-heart
                     </v-icon>
-                    <span class="subheading mr-2">{{ likes }}</span>
+                    <span class="subheading mr-2">{{ likesCount }}</span>
                 </v-row>
             </v-list-item>
         </v-card-actions>
@@ -37,7 +38,12 @@
 
 <script>
 export default {
-    props: ["user", "postMessage", "likes", "postId"],
+    props: ["user", "postMessage", "likes", "postId"], 
+    data() {
+        return {
+            likesCount: this.likes
+        }
+    },
     computed: {
         initialUsernameLetters() {
             if(this.user.username.indexOf(" ") !== -1) {
@@ -49,20 +55,18 @@ export default {
     },
     methods: {
         toLike() {
+            this.likeAnimation()
             this.$http.post("likePost", {
                 postId: this.postId,
                 userThatWannaLikeIt: this.$store.state.user._id
             })
-            .then(response => {
-                console.log(response.data)
+            .then(() => {
                 this.$http.post("getPostLikes", {
                     postId: this.postId
                 })
                 .then(response => {
-                    console.log(response.data)
-                    this.likes = response.data
+                    this.likesCount = response.data
                 })
-                .catch(e => console.log(e.response.data))
             })
             .catch(e => {
                 console.log(e.response.message)
@@ -70,12 +74,20 @@ export default {
                     this.$store.commit("REMOVE_USER")
                 }
             })
+        },
+        likeAnimation() {
+            let likeButton = this.$refs.like.$el
+
+            likeButton.style.animation = "liked 0.2s"
+            setTimeout(() => {
+                likeButton.style.animation = ""
+            }, 200)
         }
     }
 }
 </script>
 
-<style scoped>
+<style>
     .w-100 {
         min-width: 100% !important; 
         max-width: 100% !important;
@@ -85,5 +97,20 @@ export default {
         max-width: 100% !important; 
         font-size: 100% !important;    
         letter-spacing: -1px !important;
+    }
+
+    .teste-oi {
+        background: red;
+        width: 20px;
+        height: 20px;
+    }
+
+    .like-button {
+        cursor: pointer;
+    }
+
+    @keyframes liked {
+        from { transform: scale(1, 1); }
+        to { transform: scale(1.5, 1.5); }
     }
 </style>
