@@ -8,6 +8,8 @@ import '@mdi/font/css/materialdesignicons.css'
 import http from "./http/http"
 
 Vue.config.productionTip = false
+//Vue.config.silent = true // TO-DO
+
 Vue.prototype.$http = http
 
 new Vue({
