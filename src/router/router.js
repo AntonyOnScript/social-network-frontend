@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import store from '../store/store'
 import http from '../http/http'
+import store from '../store/store'
+
+const Home = () => import('../views/Home.vue')
+const Posts = () => import('../views/Posts.vue')
 
 Vue.use(VueRouter)
 
@@ -21,10 +23,7 @@ const routes = [
         meta: {
             public: false
         },
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Posts.vue')
+        component: Posts
     }
 ]
 
