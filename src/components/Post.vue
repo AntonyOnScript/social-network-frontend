@@ -1,47 +1,64 @@
 <template>
-    <v-card
-        class="mx-auto"
-        color="#FFEA00"
-        dark
-    >
-        <v-card-title>
-            <span class="text-h6 font-weight-light">{{ user.username }}</span>
-        </v-card-title>
-        <v-card-text class="text-h5 font-weight-bold">
-          "{{ postMessage }}"
-        </v-card-text>
-        <v-card-actions>
-            <v-list-item class="grow">
-                <v-list-item-avatar color="grey darken-3">
-                    <v-avatar class="avatar-cont w-100">
-                        <p class="white--text text-h5 mb-0 avatar-initials">{{ initialUsernameLetters }}</p>
-                    </v-avatar>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title>{{ user.username }}</v-list-item-title>
-                </v-list-item-content>
-                <v-row
-                  align="center"
-                  justify="end"
-                  @click="toLike()"
-                  class="like-button"
+    <div>
+        <v-card
+            class="mx-auto"
+            color="#FFEA00"
+            dark
+        >
+            <v-card-title class="d-flex justify-space-between">
+                <span class="text-h6 font-weight-light">{{ user.username }}</span>
+                <v-btn
+                    icon
+                    @click="requestDelete()"
                 >
-                    <v-icon class="mr-1" ref="like">
-                      mdi-heart
+                    <v-icon>
+                        mdi-delete
                     </v-icon>
-                    <span class="subheading mr-2">{{ likesCount }}</span>
-                </v-row>
-            </v-list-item>
-        </v-card-actions>
-    </v-card>
+                </v-btn>
+            </v-card-title>
+            <v-card-text class="text-h5 font-weight-bold">
+              "{{ postMessage }}"
+            </v-card-text>
+            <v-card-actions>
+                <v-list-item class="grow">
+                    <v-list-item-avatar color="grey darken-3">
+                        <v-avatar class="avatar-cont w-100">
+                            <p class="white--text text-h5 mb-0 avatar-initials">{{ initialUsernameLetters }}</p>
+                        </v-avatar>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ user.username }}</v-list-item-title>
+                    </v-list-item-content>
+                    <v-row
+                      align="center"
+                      justify="end"
+                      @click="toLike()"
+                      class="like-button"
+                    >
+                        <v-icon class="mr-1" ref="like">
+                          mdi-heart
+                        </v-icon>
+                        <span class="subheading mr-2">{{ likesCount }}</span>
+                    </v-row>
+                </v-list-item>
+            </v-card-actions>
+        </v-card>
+        <warning warningText="Are you sure that wanna delete it?" :showWarn="showWarningDelete" @doIt="deletePost()" @closeWarning="showWarningDelete = !showWarningDelete" />
+    </div>
 </template>
 
 <script>
+import Warning from '@/components/Warning.vue'
+
 export default {
     props: ["user", "postMessage", "likes", "postId"], 
+    components: {
+        'warning': Warning
+    },
     data() {
         return {
-            likesCount: this.likes
+            likesCount: this.likes,
+            showWarningDelete: false
         }
     },
     computed: {
@@ -82,6 +99,19 @@ export default {
             setTimeout(() => {
                 likeButton.style.animation = ""
             }, 200)
+        },
+        requestDelete() {
+            this.showWarningDelete = true
+        },
+        deletePost() {
+            this.showWarningDelete = false
+            this.$http.delete("deletePost", { data: { postId: this.postId } })
+            .then(() => {
+                this.$emit("postWasDeleted")
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
     }
 }

@@ -6,6 +6,7 @@ const http = axios.create({
 })
 
 http.interceptors.request.use(function (config) {
+    console.log(config)
     if(store.state.token) {
         config.headers.authorization = `Bearer ${store.state.token}`
     }

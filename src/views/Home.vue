@@ -50,7 +50,7 @@
         methods: {
             logUser() {
                 this.$store.dispatch("logUser", this.form)
-                .then(response => {
+                .then(() => {
                     this.alert = true
                     this.type = "success"
                     this.alertMessage = "Logged successfully"
@@ -63,7 +63,7 @@
             },
             regUser() {
                 this.$store.dispatch("regUser", this.form)
-                .then(response => {
+                .then(() => {
                     this.alert = true
                     this.type = "success"
                     this.alertMessage = "Registred successfully"
