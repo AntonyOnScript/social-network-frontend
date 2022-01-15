@@ -6,7 +6,7 @@
             dark
         >
             <v-card-title class="d-flex justify-space-between">
-                <span class="text-h6 font-weight-light">{{ user.username }}</span>
+                <span class="text-h6 font-weight-light">{{ postAssociatedUser.username }}</span>
                 <v-btn
                     icon
                     @click="requestDelete()"
