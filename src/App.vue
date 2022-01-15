@@ -9,20 +9,30 @@
             <v-spacer></v-spacer>
 
             <div
+                v-if="isLogged"
                 v-ripple
-                class="pa-3"
-                v-show="isLogged"
+                class="d-flex align-center"
+                style="height: 100%;"
             >
-                <router-link to="/posts" class="menu-links">Posts</router-link>
+                <router-link 
+                    to="/posts" 
+                    class="menu-links pa-3"
+                    style="heigth: 100%; width: 100%;"
+                >
+                    Posts
+                </router-link>
             </div>
 
             <div
                 v-if="isLogged"
-                v-ripple
-                class="pa-3"
                 @click="logout()"
             >
-                <button>Log Out</button>
+                <button
+                    v-ripple
+                    class="pa-3"
+                >
+                    Log Out
+                </button>
             </div>
         </v-app-bar>
 
@@ -57,6 +67,10 @@ export default {
 </script>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     :root {
         --yellow-color: #aaad00;
         --green-color: #397019;
