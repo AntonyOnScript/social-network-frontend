@@ -2,7 +2,7 @@ import axios from "axios"
 import store from "../store/store"
 
 const http = axios.create({
-    baseURL: "http://localhost:8000/"
+    baseURL: `${process.env.VUE_APP_API_ENDPOINT}`
 })
 
 http.interceptors.request.use(function (config) {
