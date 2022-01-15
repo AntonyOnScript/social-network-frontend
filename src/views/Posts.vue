@@ -70,8 +70,13 @@ export default {
     },
     methods: {
         sendPost() {
+            if(this.postData.postContent.length <= 10) {
+                this.sending = false
+                return
+            }
+
             this.$http.post("post", this.postData)
-            .then(response => {
+            .then(() => {
                 this.sending = false
                 this.getPosts()
             })
@@ -80,7 +85,6 @@ export default {
                 if(e.response.data === "TokenExpiredError: jwt expired") {
                     this.$store.commit("REMOVE_USER")
                     this.$router.push({ name: "Home", query: { error: "Session expired." } })
-                    console.log(this.$store.state)
                 }
             })
         },
