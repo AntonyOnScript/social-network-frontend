@@ -2,7 +2,7 @@
     <div>
         <v-card
             class="mx-auto"
-            color="var(--yellow-color)"
+            color="var(--green-color)"
             dark
         >
             <v-card-title class="d-flex justify-space-between">

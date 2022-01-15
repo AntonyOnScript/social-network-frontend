@@ -2,8 +2,8 @@
     <v-container class="global d-flex flex-column justify-center">
         <h1 class="text-center">What's up!</h1>
         <form @submit.prevent>
-            <v-text-field label="Username" v-model="form.username" autocomplete="off"></v-text-field>
-            <v-text-field label="Password" type="password" v-model="form.password"></v-text-field>
+            <v-text-field label="Username" v-model="form.username" autocomplete="off" color="var(--theme-color)"></v-text-field>
+            <v-text-field label="Password" type="password" v-model="form.password" color="var(--theme-color)"></v-text-field>
             <div class="d-flex justify-end">
                 <v-btn
                     type="submit"
