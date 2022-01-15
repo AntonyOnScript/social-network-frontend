@@ -50,6 +50,9 @@ export default new Vuex.Store({
     getters: {
         isLogged(state) {
             return Boolean(state.token)
+        },
+        getUser(state) {
+            return state.user
         }
     },
     plugins: [createPersistedState()]

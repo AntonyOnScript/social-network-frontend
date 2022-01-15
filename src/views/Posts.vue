@@ -33,7 +33,7 @@
         <div class="content-posts my-5">    
             <transition-group name="fade-posts" >
                 <div v-for="post of posts" v-bind:key="post.associatedUser.username">
-                    <post class="my-4" @postWasDeleted="getPosts()" :user="post.associatedUser" v-bind:key="post.associatedUser" :postMessage="post.postContent" :postId="post._id" :likes="post.likes" />
+                    <post class="my-4" @postWasDeleted="getPosts()" :user="currentUser" v-bind:key="post.associatedUser" :postMessage="post.postContent" :postId="post._id" :postAssociatedUser="post.associatedUser" :likes="post.likes" />
                 </div>
             </transition-group> 
         </div>
@@ -67,6 +67,11 @@ export default {
     },
     mounted() {
         this.getPosts()
+    },
+    computed: {
+        currentUser() {
+            return this.$store.getters.getUser
+        }
     },
     methods: {
         sendPost() {

@@ -10,6 +10,7 @@
                 <v-btn
                     icon
                     @click="requestDelete()"
+                    v-if="postAssociatedUser._id === user._id"
                 >
                     <v-icon>
                         mdi-delete
@@ -51,7 +52,7 @@
 import Warning from '@/components/Warning.vue'
 
 export default {
-    props: ["user", "postMessage", "likes", "postId"], 
+    props: ["user", "postMessage", "likes", "postId", "postAssociatedUser"], 
     components: {
         'warning': Warning
     },
