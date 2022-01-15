@@ -2,7 +2,7 @@
     <div>
         <v-card
             class="mx-auto"
-            color="#FFEA00"
+            color="var(--yellow-color)"
             dark
         >
             <v-card-title class="d-flex justify-space-between">
@@ -127,12 +127,6 @@ export default {
         max-width: 100% !important; 
         font-size: 100% !important;    
         letter-spacing: -1px !important;
-    }
-
-    .teste-oi {
-        background: red;
-        width: 20px;
-        height: 20px;
     }
 
     .like-button {

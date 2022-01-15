@@ -1,22 +1,22 @@
 <template>
     <v-container class="global d-flex flex-column justify-center">
         <h1 class="text-center">What's up!</h1>
-        <form @submit.prevent="logUser()">
-            <v-text-field label="Username" v-model="form.username"></v-text-field>
+        <form @submit.prevent>
+            <v-text-field label="Username" v-model="form.username" autocomplete="off"></v-text-field>
             <v-text-field label="Password" type="password" v-model="form.password"></v-text-field>
-            <v-btn
-                type="submit"
-                elevation="2"
-            >Login</v-btn>
-        </form>
-        <br>
-        <form @submit.prevent="regUser()">
-            <v-text-field label="Username" v-model="form.username"></v-text-field>
-            <v-text-field label="Password" type="password" v-model="form.password"></v-text-field>
-            <v-btn
-                type="submit"
-                elevation="2"
-            >Register</v-btn>
+            <div class="d-flex justify-end">
+                <v-btn
+                    type="submit"
+                    @click="logUser()"
+                    elevation="4"
+                    class="mr-6"
+                >Login</v-btn>
+                <v-btn
+                    type="submit"
+                    @click="regUser()"
+                    elevation="4"
+                >Register</v-btn>
+            </div>
         </form>
         <div>
             <v-alert
@@ -24,6 +24,7 @@
               v-show="alert"
               border="left"
               :type="type"
+              :color="color"
               dark
               dismissible
               class="mt-5"
@@ -53,11 +54,13 @@
                 .then(() => {
                     this.alert = true
                     this.type = "success"
+                    this.color = "var(--green-color)"
                     this.alertMessage = "Logged successfully"
                 })
                 .catch(e => { 
                     this.alert = true
                     this.type = "warning"
+                    this.color = "var(--yellow-color)"
                     this.alertMessage = e.response.data
                 })
             },
@@ -66,10 +69,12 @@
                 .then(() => {
                     this.alert = true
                     this.type = "success"
+                    this.color = "var(--green-color)"
                     this.alertMessage = "Registred successfully"
                 })
                 .catch(e => { 
                     this.alert = true
+                    this.color = "var(--yellow-color)"
                     this.type = "warning"
                     this.alertMessage = e.response.data
                 })
@@ -80,6 +85,7 @@
                 if(this.$route.query.error) {
                     this.alertMessage = this.$route.query.error
                     this.type = "warning"
+                    this.color = "var(--yellow-color)"
                     this.alert = true
                 }
             }
@@ -88,6 +94,7 @@
             if(this.$route.query.error) {
                 this.alertMessage = this.$route.query.error
                 this.type = "warning"
+                this.color = "var(--yellow-color)"
                 this.alert = true
             }
         }

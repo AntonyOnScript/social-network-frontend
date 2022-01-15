@@ -7,7 +7,7 @@
                     auto-grow
                     outlined
                     flat
-                    color="#FFEA00"
+                    color="var(--yellow-color)"
                     solo
                     placeholder="Post something here"
                     class="post-text"
@@ -23,7 +23,7 @@
                         file
                         plain
                         outlined
-                        color="#FFEA00"
+                        color="var(--yellow-color)"
                         type="submit"
                         @click="sending = !sending"
                     >Tweet it!</v-btn>
@@ -72,13 +72,11 @@ export default {
         sendPost() {
             this.$http.post("post", this.postData)
             .then(response => {
-                console.log(response.data)
                 this.sending = false
                 this.getPosts()
             })
             .catch(e => {
                 this.sending = false
-                console.log(e.response.data)
                 if(e.response.data === "TokenExpiredError: jwt expired") {
                     this.$store.commit("REMOVE_USER")
                     this.$router.push({ name: "Home", query: { error: "Session expired." } })
@@ -90,7 +88,6 @@ export default {
             this.$http.get("posts")
             .then(response => {
                 this.posts = response.data
-                console.log(response.data)
             })
         }
     }

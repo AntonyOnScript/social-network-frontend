@@ -34,7 +34,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log("token", store.state.token)
     if(!to.meta.public) {
         http.post("checkJWT", { token: store.state.token })
         .then(response => {
