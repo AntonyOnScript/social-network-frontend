@@ -17,7 +17,7 @@
                 </v-btn>
             </v-card-title>
             <v-card-text class="text-h5 font-weight-bold">
-              "{{ postMessage }}"
+              {{ postMessage }}
             </v-card-text>
             <v-card-actions>
                 <v-list-item class="grow">
